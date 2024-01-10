@@ -7,6 +7,7 @@ import numpy as np
 
 transform = transforms.Compose([
     transforms.ToTensor(),
+    transforms.Pad(18), # Pad MNIST data from 28x28 to 64x64
     transforms.Normalize(0.5, 1),
 ])
 
@@ -25,6 +26,7 @@ def MNIST(batch_size):
 if __name__ == "__main__":
     dataloader = MNIST(32)
     batch = next(iter(dataloader))
+    print(batch[0].size())
     plt.figure(figsize=(8,8))
     plt.axis("off")
     plt.title("Training Images")

@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 transform = transforms.Compose([
+    # transforms.Pad(18), # Pad MNIST data from 28x28 to 64x64
+    transforms.Resize(64),
     transforms.ToTensor(),
-    transforms.Pad(18), # Pad MNIST data from 28x28 to 64x64
-    transforms.Normalize(0.5, 1),
+    transforms.Normalize((0.5,), (0.5,)),
 ])
 
 if torch.backends.mps.is_available():

@@ -37,7 +37,7 @@ criterion = nn.BCELoss()
 
 # Create batch of latent vectors that we will use to visualize
 #  the progression of the generator
-fixed_noise = torch.randn(image_size, latent_feature, 1, 1, device=device)
+fixed_noise = torch.randn(batch_size, latent_feature, 1, 1, device=device)
 
 # Establish convention for real and fake labels during training
 real_label = 1.
@@ -95,7 +95,7 @@ for epoch in range(1, num_epochs + 1):
         D_G_z2 = output.mean().item()
         optimizerG.step()
 
-    print("Epoch {:<4} Loss_D: {:<.4f} Loss_G: {:<.4f} D(x): {:<.4f} D(G(z)): {:<.4f} / {:<.4f}".format(epoch, errorD.item(), errorG.item(), D_x, D_G_z1, D_G_z2))
+    print("Epoch {:<3} Loss_D: {:<.4f} Loss_G: {:<.4f} D(x): {:<.4f} D(G(z)): {:<.4f} / {:<.4f}".format(epoch, errorD.item(), errorG.item(), D_x, D_G_z1, D_G_z2))
     checkpoints = {
         "netG": netG.state_dict(),
         "netD": netD.state_dict(),

@@ -15,13 +15,13 @@ elif torch.cuda.is_available():
 else:
     device = torch.device("cpu")
 
-num_epochs = 100
+num_epochs = 400
 batch_size = 128
 image_size = 28
 num_channels = 1
 latent_feature = 100
 learning_rate = 2e-4
-beta1 = 0.5
+beta1 = 0.9
 num_gpu = 1
 
 dataloader = MNIST(batch_size=batch_size)

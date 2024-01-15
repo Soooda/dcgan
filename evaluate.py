@@ -13,7 +13,7 @@ else:
 
 z = 100
 channel = 1
-checkpoint = osp.sep.join(("checkpoints", "34.pth"))
+checkpoint = osp.sep.join(("checkpoints", "mnist.pth"))
 model = Generator(1, z, channel).to(device)
 
 with torch.no_grad():

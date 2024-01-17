@@ -4,7 +4,8 @@ import torch.optim as optim
 import os
 
 from model.dcgan import Generator, Discriminator, weights_init
-from data.mnist import MNIST
+# from data.mnist import MNIST
+from data.celeba import CELEBA
 
 if torch.backends.mps.is_available():
     device = torch.device("mps")
@@ -15,16 +16,34 @@ elif torch.cuda.is_available():
 else:
     device = torch.device("cpu")
 
-num_epochs = 400
+'''
+MNIST:
+400 epochs
+128
+28 x 28
+1 channel
+lr=2e-4
+beta1=0.9
+
+CelebA
+100 epochs
+128
+64 x 64
+3 channels
+lr=2e-4
+beta1=0.5
+'''
+num_epochs = 100
 batch_size = 128
-image_size = 28
-num_channels = 1
+image_size = 64
+num_channels = 3
 latent_feature = 100
 learning_rate = 2e-4
-beta1 = 0.9
+beta1 = 0.5
 num_gpu = 1
 
-dataloader = MNIST(batch_size=batch_size)
+# dataloader = MNIST(batch_size=batch_size)
+dataloader = CELEBA(batch_size=batch_size)
 netG = Generator(num_gpu, latent_feature, num_channels).to(device)
 netD = Discriminator(num_gpu, num_channels).to(device)
 if (device.type == 'cuda') and (num_gpu > 1):
@@ -59,11 +78,12 @@ for epoch in range(1, num_epochs + 1):
         optimizerG.load_state_dict(temp["optimizerG"])
         continue
 
-    for i, data in enumerate(dataloader, start=0):
+    for i, data in enumerate(dataloader):
         optimizerD.zero_grad()
         
         # Train with real data
-        imgs = data[0].to(device)
+        # imgs = data[0].to(device)
+        imgs = data.to(device)
         labels = torch.full((imgs.size(0),), real_label, dtype=torch.float, device=device)
         # Forward pass real batch through D
         output = netD(imgs).view(-1)

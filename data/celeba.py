@@ -10,7 +10,7 @@ from PIL import Image
 data_root = 'datasets/celeba'
 dataset_folder = f'{data_root}/img_align_celeba'
 image_size = 64
-num_workers = 2
+num_workers = 8
 transform = transforms.Compose([
     transforms.Resize(64),
     transforms.CenterCrop(64),
@@ -64,15 +64,15 @@ if __name__ == "__main__":
     batch = next(iter(dataloader))
     print(batch.size())
 
-    # for i in range(batch[0].size()[0]):
-    #     img = batch[0][i].view(28, 28)
-    #     plt.figure(figsize=(4, 4))
-    #     plt.axis('Off')
-    #     plt.imshow(img, cmap="gray")
-    #     plt.show()
-
     plt.figure(figsize=(8,8))
     plt.axis("off")
     plt.title("Training Images")
     plt.imshow(np.transpose(vutils.make_grid(batch.to(device)[:64], padding=2, normalize=True).cpu(),(1,2,0)))
     plt.show()
+
+    # for i in range(batch[0].size()[0]):
+    #     img = batch[0][i].view(image_size, image_size)
+    #     plt.figure(figsize=(4, 4))
+    #     plt.axis('Off')
+    #     plt.imshow(img)
+    #     plt.show()

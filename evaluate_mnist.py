@@ -12,8 +12,8 @@ else:
     device = torch.device("cpu")
 
 z = 100
-channel = 3
-checkpoint = osp.sep.join(("checkpoints", "100.pth"))
+channel = 1
+checkpoint = osp.sep.join(("checkpoints", "mnist.pth"))
 model = Generator(1, z, channel).to(device)
 
 with torch.no_grad():
@@ -24,7 +24,7 @@ with torch.no_grad():
 
     for i in range(10):
         noise = torch.randn(1, z, 1, 1, device=device)
-        generated_data = model(noise).view(64, 64, channel).cpu()
+        generated_data = model(noise).view(64, 64).cpu()
 
         plt.figure(figsize=(4, 4))
         plt.axis('Off')

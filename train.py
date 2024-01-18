@@ -26,7 +26,7 @@ lr=2e-4
 beta1=0.9
 
 CelebA
-100 epochs
+200 epochs
 128
 64 x 64
 3 channels
